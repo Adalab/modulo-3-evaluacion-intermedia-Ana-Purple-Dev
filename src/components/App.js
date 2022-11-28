@@ -10,10 +10,17 @@ function App() {
     counselor: '',
     speciality: '',
   });
+  const handleSubmit = (ev) => {
+    ev.preventDefault();
+  };
+  const handleClickAddAdalaber = (ev) => {
+    console.log(data);
+    setData([...data, newAdalaber]);
+  };
 
-  const handleClickAddAdalaber = (ev) => {};
-
-  const handleNewAdalaber = (ev) => {};
+  const handleNewAdalaber = (ev) => {
+    setNewAdalaber({ ...newAdalaber, [ev.target.id]: ev.target.value });
+  };
 
   const htmlData = data.map((oneAdalaber, index) => {
     return (
@@ -43,7 +50,7 @@ function App() {
       </table>
       <section>
         <h2>Añadir una Adalaber</h2>
-        <form action=''>
+        <form action='' onSubmit={handleSubmit}>
           <label htmlFor=''>Nombre</label>
           <input
             type='text'
