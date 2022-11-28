@@ -14,10 +14,15 @@ function App() {
   const [select, setSelect] = useState('Escoge una opción');
 
   const handleSelect = (ev) => {
+    let filteredByCounselor;
     setSelect(ev.target.value);
-    const filteredByCounselor = adalabers.results.filter(
-      (oneAdalaber) => oneAdalaber.counselor === ev.target.value
-    );
+    if (ev.target.value === 'Escoge una opción') {
+      filteredByCounselor = adalabers.results;
+    } else {
+      filteredByCounselor = adalabers.results.filter(
+        (oneAdalaber) => oneAdalaber.counselor === ev.target.value
+      );
+    }
     setData([...filteredByCounselor]);
   };
 
@@ -48,6 +53,11 @@ function App() {
         <td>{oneAdalaber.name}</td>
         <td>{oneAdalaber.counselor}</td>
         <td>{oneAdalaber.speciality}</td>
+        <td>
+          {oneAdalaber.social_networks.map((oneNetwork, index) => {
+            return <a href={oneNetwork.counselor}>{oneNetwork.name}</a>;
+          })}
+        </td>
       </tr>
     );
   });
@@ -79,9 +89,11 @@ function App() {
             <th>Nombre</th>
             <th>Tutora</th>
             <th>Especialidad</th>
+            <th>Redes</th>
           </tr>
         </thead>
         <tbody>
+          <tr>{htmlData}</tr>
           <tr>{htmlData}</tr>
           <tr>{htmlData}</tr>
           <tr>{htmlData}</tr>
