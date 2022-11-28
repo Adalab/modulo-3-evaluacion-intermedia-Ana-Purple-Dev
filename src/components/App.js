@@ -10,6 +10,26 @@ function App() {
     counselor: '',
     speciality: '',
   });
+  const [search, setSearch] = useState('');
+  const [select, setSelect] = useState('Escoge una opción');
+
+  const handleSelect = (ev) => {
+    setSelect(ev.target.value);
+    const filteredByCounselor = adalabers.results.filter(
+      (oneAdalaber) => oneAdalaber.counselor === ev.target.value
+    );
+    setData([...filteredByCounselor]);
+  };
+
+  const handleSearch = (ev) => {
+    setSearch(ev.target.value);
+    console.log(ev.target.value);
+    const filteredAdalabersByName = adalabers.results.filter((oneAdalaber) =>
+      oneAdalaber.name.toLowerCase().includes(search.toLowerCase())
+    );
+    console.log(filteredAdalabersByName);
+    setData([...filteredAdalabersByName]);
+  };
   const handleSubmit = (ev) => {
     ev.preventDefault();
   };
@@ -24,8 +44,8 @@ function App() {
 
   const htmlData = data.map((oneAdalaber, index) => {
     return (
-      <tr>
-        <td key={index}>{oneAdalaber.name}</td>
+      <tr key={index}>
+        <td>{oneAdalaber.name}</td>
         <td>{oneAdalaber.counselor}</td>
         <td>{oneAdalaber.speciality}</td>
       </tr>
@@ -34,6 +54,25 @@ function App() {
   return (
     <div>
       <h1>Adalabers</h1>
+      <form>
+        <label htmlFor=''>Nombre</label>
+        <input
+          autoComplete='off'
+          type='search'
+          name='search'
+          placeholder='Ej:Maricarmen'
+          value={search}
+          onInput={handleSearch}
+        />
+        <label htmlFor=''>Escoge una tutora</label>
+        <select name='' id='' onChange={handleSelect} value={select}>
+          <option value='Escoge una opción'>Escoge una opción</option>
+          <option value='Yanelis'>Yanelis</option>
+          <option value='Dayana'>Dayana</option>
+          <option value='Iván'>Iván</option>
+          <option value='Miguel'>Miguel</option>
+        </select>
+      </form>
       <table className='table'>
         <thead>
           <tr>
