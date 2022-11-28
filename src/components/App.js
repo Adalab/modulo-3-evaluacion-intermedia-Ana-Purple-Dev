@@ -55,7 +55,7 @@ function App() {
         <td>{oneAdalaber.speciality}</td>
         <td>
           {oneAdalaber.social_networks.map((oneNetwork, index) => {
-            return <a href={oneNetwork.counselor}>{oneNetwork.name}</a>;
+            return <a href={oneNetwork.url}>{oneNetwork.name}</a>;
           })}
         </td>
       </tr>
