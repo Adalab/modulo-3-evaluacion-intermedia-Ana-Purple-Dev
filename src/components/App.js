@@ -3,7 +3,6 @@ import adalabers from '../data/adalabers.json';
 import { useState } from 'react';
 
 function App() {
-  console.log(adalabers);
   const [data, setData] = useState(adalabers.results);
   const [newAdalaber, setNewAdalaber] = useState({
     name: '',
@@ -28,18 +27,16 @@ function App() {
 
   const handleSearch = (ev) => {
     setSearch(ev.target.value);
-    console.log(ev.target.value);
     const filteredAdalabersByName = adalabers.results.filter((oneAdalaber) =>
       oneAdalaber.name.toLowerCase().includes(search.toLowerCase())
     );
-    console.log(filteredAdalabersByName);
+
     setData([...filteredAdalabersByName]);
   };
   const handleSubmit = (ev) => {
     ev.preventDefault();
   };
   const handleClickAddAdalaber = (ev) => {
-    console.log(data);
     setData([...data, newAdalaber]);
   };
 
@@ -47,20 +44,23 @@ function App() {
     setNewAdalaber({ ...newAdalaber, [ev.target.id]: ev.target.value });
   };
 
-  const htmlData = data.map((oneAdalaber, index) => {
-    return (
-      <tr key={index}>
-        <td>{oneAdalaber.name}</td>
-        <td>{oneAdalaber.counselor}</td>
-        <td>{oneAdalaber.speciality}</td>
-        <td>
-          {oneAdalaber.social_networks.map((oneNetwork, index) => {
-            return <a href={oneNetwork.url}>{oneNetwork.name}</a>;
-          })}
-        </td>
-      </tr>
-    );
-  });
+  const renderHtmlData = (html) => {
+    return data.map((oneAdalaber) => {
+      return (
+        <tr key={oneAdalaber.id}>
+          <td>{oneAdalaber.name}</td>
+          <td>{oneAdalaber.counselor}</td>
+          <td>{oneAdalaber.speciality}</td>
+          <td>
+            {oneAdalaber.social_networks.map((oneNetwork) => {
+              return <a href={oneNetwork.url}>{oneNetwork.name}</a>;
+            })}
+          </td>
+        </tr>
+      );
+    });
+  };
+
   return (
     <div>
       <h1>Adalabers</h1>
@@ -92,12 +92,7 @@ function App() {
             <th>Redes</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>{htmlData}</tr>
-          <tr>{htmlData}</tr>
-          <tr>{htmlData}</tr>
-          <tr>{htmlData}</tr>
-        </tbody>
+        <tbody>{renderHtmlData(data)}</tbody>
       </table>
       <section>
         <h2>Añadir una Adalaber</h2>
