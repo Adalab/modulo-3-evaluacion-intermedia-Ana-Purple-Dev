@@ -35,9 +35,8 @@ function App() {
   };
   const handleSubmit = (ev) => {
     ev.preventDefault();
-  };
-  const handleClickAddAdalaber = (ev) => {
     setData([...data, newAdalaber]);
+    setNewAdalaber({ ...newAdalaber, name: '', counselor: '', speciality: '' });
   };
 
   const handleNewAdalaber = (ev) => {
@@ -52,9 +51,16 @@ function App() {
           <td>{oneAdalaber.counselor}</td>
           <td>{oneAdalaber.speciality}</td>
           <td>
-            {oneAdalaber.social_networks.map((oneNetwork) => {
-              return <a href={oneNetwork.url}>{oneNetwork.name}</a>;
-            })}
+            {oneAdalaber.social_networks &&
+            oneAdalaber.social_networks.length > 0
+              ? oneAdalaber.social_networks.map((oneNetwork, index) => {
+                  return (
+                    <a key={index} href={oneNetwork.url}>
+                      {oneNetwork.name}
+                    </a>
+                  );
+                })
+              : 'No social network'}
           </td>
         </tr>
       );
@@ -121,11 +127,7 @@ function App() {
             id='speciality'
             value={newAdalaber.speciality}
           />
-          <input
-            type='submit'
-            onClick={handleClickAddAdalaber}
-            value='Añadir una nueva Adalaber'
-          />
+          <input type='submit' value='Añadir una nueva Adalaber' />
         </form>
       </section>
     </div>
